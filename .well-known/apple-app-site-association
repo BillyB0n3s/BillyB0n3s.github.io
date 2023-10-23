@@ -1,0 +1,11 @@
+{
+    “applinks”: {
+        “apps”: [],
+        “details”: [
+            {
+                “appID”: “apple_dev_account_tam_id(e.g. T5TQ36Q2SQ).com.gboutin.reco”,
+                “paths”: [“/reco.url/*”],
+            }
+        ]
+    }
+}
