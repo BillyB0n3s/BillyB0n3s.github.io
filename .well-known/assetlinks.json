@@ -4,7 +4,7 @@
     "target": {
       "namespace": "android_app",
       "package_name": "com.gboutin.reco",
-      "sha256_cert_fingerprints": ["f4:03:30:af:8a:eb:bf:30:c6:59:1a:54:c3:a8:e1:29:fa:48:72:2f:0a:c8:2e:01:af:30:63:0d:3a:33:8a:19"]
+      "sha256_cert_fingerprints": ["F4:03:30:AF:8A:EB:BF:30:C6:59:1A:54:C3:A8:E1:29:FA:48:72:2F:0A:C8:2E:01:AF:30:63:0D:3A:33:8A:19"]
     }
   },
   {
