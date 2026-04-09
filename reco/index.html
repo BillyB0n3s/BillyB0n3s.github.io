@@ -1,10 +1,118 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Reco</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Reco invite</title>
+	<!-- open graph meta data -->
+	<meta property="og:image" content="https://parisianfields.files.wordpress.com/2010/10/lechatnoir.jpg">
+	<meta property="og:title" content="Reco">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://billyb0n3s.github.io/reco.url/test">
+	<meta property="og:site_name" content="sitename">
+	<meta property="og:description" content="blabla">
+	<link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
-  <p>hey hey</p>
+
+  <div id="root"></div>
+
+  <!-- React + Babel CDN -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- React Code -->
+  <script type="text/babel">
+    function App() {
+      const [copied, setCopied] = React.useState(false);
+      const inputRef = React.useRef(null);
+      const currentUrl = window.location.href;
+	  const OS = getOS();
+	  const supportedOS = (OS=="Android" || OS=="iOS");
+	  const portrait = window.matchMedia("(orientation: portrait)").matches;
+	  //if(!supportedOS){  alert(`Unsupported operating system : ${OS}`); }
+	  //alert(`Screen orientation : ${portrait ? "portrait" : "landscape"}`);
+
+
+      // Select the input by default on first render
+      React.useEffect(() => {
+	  
+        if (inputRef.current) {
+          inputRef.current.focus();
+          inputRef.current.select();
+        }
+      }, []);
+
+      const handleCopy = async () => {
+        try {
+          await navigator.clipboard.writeText(currentUrl);
+          setCopied(true);
+
+          // Unselect input after copying
+          if (inputRef.current) {
+            inputRef.current.blur(); // optional: removes focus
+          }
+        } catch (err) {
+          console.error("Copy failed:", err);
+          alert("Copy failed. Try again.");
+        }
+      };
+
+      const handleRedirect = () => {
+        //window.location.href = "https://apps.apple.com/app/id000000000"; // Replace with your App Store link
+		redirect(currentUrl);
+      };
+
+	if(supportedOS){
+      return (
+		<div className="mobile-background">
+        <div className="container">
+          <h2 className="title">Welcome to Reco !</h2>
+          <p>You will be redirected shortly to download the app. Please copy the current url to clipboard to proceed :</p>
+          <input
+            ref={inputRef}
+            className="url-box"
+            type="text"
+            value={currentUrl}
+            readOnly
+          />
+
+          <button
+            className={`copy-button ${copied ? "copied" : ""}`}
+            onClick={handleCopy}
+          >
+            {copied ? "Copied!" : "Copy"}
+          </button>
+
+          {copied && (
+            <div>
+              <button className="store-button" onClick={handleRedirect}>
+                Proceed to app Store
+              </button>
+            </div>
+          )}
+
+        </div>
+		</div>
+      );
+	  }else{
+	  return(
+	  <body>
+		<div className="desktop-background">
+		<div className="container">
+        <h2 className="title">NOPE !</h2>
+        <p>This page was intended for mobile devices but it seems you are on {OS}</p>
+		</div>
+		</div>
+	  </body>
+	  );
+    }
+  }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
 </body>
 </html>
